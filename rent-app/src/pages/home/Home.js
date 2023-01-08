@@ -1,14 +1,21 @@
 import { ProductBox } from "../../components/Product-box";
 import { ProductHeader } from "./Products-header";
+import { useFetch } from "../../hooks/useFetch";
 
 import storeItems from "../../data/items.json";
 import React from "react";
+import { Container } from "react-bootstrap";
+import { UseFetchContext } from "../../hooks/UseFetchContext";
 
 export function Home() {
+  // let { items } = useFetch();
+  const { items } = UseFetchContext();
+
+  // console.log(items);
   return (
     <>
       <ProductHeader></ProductHeader>
-      {storeItems.product.map((item) => (
+      {items.map((item) => (
         <React.Fragment key={item.id}>
           <ProductBox {...item} />
         </React.Fragment>

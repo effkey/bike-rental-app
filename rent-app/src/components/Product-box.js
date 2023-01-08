@@ -1,5 +1,6 @@
 import { Button, Card, Nav, Table } from "react-bootstrap";
 import { NavLink } from "react-router-dom";
+import { useShoppingCart } from "../context/ShoppingCartContext";
 export function ProductBox({
   id,
   title,
@@ -11,8 +12,15 @@ export function ProductBox({
   color,
   productCount,
 }) {
+  const {
+    getItemQuantity,
+    increaseCartQuantity,
+    decreaseCartQuantity,
+    removeFromCart,
+  } = useShoppingCart();
+  const quantity = getItemQuantity(id);
   return (
-    <Card className="mx-auto max-w-7xl bg-white shadow-sm mt-6">
+    <Card className="mx-auto max-w-7xl bg-white shadow-sm  mb-4 ">
       <Card.Body className="flex items-center">
         <Table>
           <div className="flex justify-between">
@@ -22,7 +30,7 @@ export function ProductBox({
             <th>
               <div className="ml-20 mb-5 text-base justify-between">
                 <Card.Title> {title}</Card.Title>
-                <Card.Text> Opis: {description}</Card.Text>
+                <Card.Text> {description}</Card.Text>
                 <Card.Text> Typ : {type} </Card.Text>
                 <Card.Text> Ilość: {productCount}</Card.Text>
               </div>
@@ -40,7 +48,42 @@ export function ProductBox({
                     </Nav.Link>
                   </Button>
                 </div>
-                <Button variant="danger">Dodaj do koszyka</Button>
+                {quantity === 0 ? (
+                  <Button
+                    variant="danger"
+                    onClick={() => increaseCartQuantity(id)}
+                  >
+                    Dodaj do koszyka
+                  </Button>
+                ) : (
+                  <div
+                    className="d-flex align-items-center flex-column"
+                    style={{ gap: ".5rem" }}
+                  >
+                    <Button onClick={() => increaseCartQuantity(id)}>+</Button>
+
+                    <div>
+                      <span className="fs-3">{quantity} </span> w koszyku
+                    </div>
+                    <div
+                      className="d-flex align-items-center justify-content-center"
+                      style={{ gap: ".5rem" }}
+                    >
+                      <Button onClick={() => decreaseCartQuantity(id)}>
+                        -
+                      </Button>
+                    </div>
+                    <div>
+                      <Button
+                        onClick={() => removeFromCart(id)}
+                        variant="danger"
+                        size="sm"
+                      >
+                        Usuń w koszyku
+                      </Button>
+                    </div>
+                  </div>
+                )}
               </div>
             </th>
           </div>
