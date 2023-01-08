@@ -1,7 +1,7 @@
 import { Button, Stack } from "react-bootstrap";
 import { PropTypes } from "react-bootstrap/esm/Image";
 import { useShoppingCart } from "../context/ShoppingCartContext";
-import useFetch from "../hooks/useFetch";
+import useFetch from "../śmieci/useFetch";
 import storeItems from "../data/items.json";
 import useFetchForDetails from "../hooks/useFetchForDetails";
 

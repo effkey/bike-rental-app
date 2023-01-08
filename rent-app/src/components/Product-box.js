@@ -19,6 +19,7 @@ export function ProductBox({
     removeFromCart,
   } = useShoppingCart();
   const quantity = getItemQuantity(id);
+  // console.log("quanv2", quantity);
   return (
     <Card className="mx-auto max-w-7xl bg-white shadow-sm  mb-4 ">
       <Card.Body className="flex items-center">

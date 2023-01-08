@@ -10,8 +10,10 @@ export function UseFetchContext() {
 }
 
 export function FetchProvider({ children }) {
+  const URL = `http://localhost:8000`;
+
   const [items, setItems] = useState([]);
-  const [page, setPage] = useState("http://localhost:8000/product");
+  const [page, setPage] = useState(`${URL}/product`);
   const [type, setType] = useState([]);
   const [typePage, setTypePage] = useState([]);
   useEffect(() => {
@@ -52,21 +54,22 @@ export function FetchProvider({ children }) {
   };
 
   const resetData = () => {
-    setPage("http://localhost:8000/product");
+    setPage(`${URL}/product`);
   };
 
   const getProductTypes = (type) => {
-    setPage(`http://localhost:8000/product?type=${type}`);
+    setPage(`${URL}/product?type=${type}`);
   };
 
   // Potrzebne do pobierania typów
   useEffect(() => {
-    fetch("http://localhost:8000/type")
+    fetch(`${URL}/type`)
       .then((response) => response.json())
       .then((data) => setType(data))
       .catch((error) => console.log("errrrror", error));
   }, []);
 
+  const getAllTypes = () => {};
   //   const getItemID = (id) => {
   //     setPage(`http://localhost:8000/product/${id}`);
   //     return items;

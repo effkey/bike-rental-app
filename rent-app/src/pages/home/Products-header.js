@@ -1,5 +1,5 @@
 import { Button, Card, Dropdown, DropdownButton } from "react-bootstrap";
-import useFetch from "../../hooks/useFetch";
+import useFetch from "../../śmieci/useFetch";
 import { UseFetchContext } from "../../hooks/UseFetchContext";
 
 export function ProductHeader() {

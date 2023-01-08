@@ -3,7 +3,7 @@ import { useShoppingCart } from "../context/ShoppingCartContext";
 import PropTypes from "prop-types";
 import { CartItem } from "./CartItem";
 import useFetchForDetails from "../hooks/useFetchForDetails";
-import useFetch from "../hooks/useFetch";
+import useFetch from "../śmieci/useFetch";
 import { UseFetchContext } from "../hooks/UseFetchContext";
 
 export function ShoppingCart({ isOpen }) {

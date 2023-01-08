@@ -2,13 +2,21 @@ import { Button, Card, Nav, Table } from "react-bootstrap";
 import { NavLink, useParams } from "react-router-dom";
 import { ProductHeader } from "../home/Products-header";
 import { useFetchForDetails } from "../../hooks/useFetchForDetails";
-import useFetch from "../../hooks/useFetch";
+import useFetch from "../../śmieci/useFetch";
+import { useShoppingCart } from "../../context/ShoppingCartContext";
 
 export function Details() {
   // // Routing z parametrem
   let { id } = useParams();
-
+  id = Number(id);
   let product = useFetchForDetails(id);
+  const {
+    getItemQuantity,
+    increaseCartQuantity,
+    decreaseCartQuantity,
+    removeFromCart,
+  } = useShoppingCart();
+  const quantity = getItemQuantity(id);
 
   return (
     <>
@@ -46,7 +54,44 @@ export function Details() {
                       </Nav.Link>
                     </Button>
                   </div>
-                  <Button variant="danger">Dodaj do koszyka</Button>
+                  {quantity === 0 ? (
+                    <Button
+                      variant="danger"
+                      onClick={() => increaseCartQuantity(id)}
+                    >
+                      Dodaj do koszyka
+                    </Button>
+                  ) : (
+                    <div
+                      className="d-flex align-items-center flex-column"
+                      style={{ gap: ".5rem" }}
+                    >
+                      <Button onClick={() => increaseCartQuantity(id)}>
+                        +
+                      </Button>
+
+                      <div>
+                        <span className="fs-3">{quantity} </span> w koszyku
+                      </div>
+                      <div
+                        className="d-flex align-items-center justify-content-center"
+                        style={{ gap: ".5rem" }}
+                      >
+                        <Button onClick={() => decreaseCartQuantity(id)}>
+                          -
+                        </Button>
+                      </div>
+                      <div>
+                        <Button
+                          onClick={() => removeFromCart(id)}
+                          variant="danger"
+                          size="sm"
+                        >
+                          Usuń w koszyku
+                        </Button>
+                      </div>
+                    </div>
+                  )}
                 </div>
               </th>
             </div>
