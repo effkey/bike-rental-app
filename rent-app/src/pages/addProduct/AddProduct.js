@@ -10,6 +10,7 @@ import {
   Popover,
 } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import { Navbar } from "../../components/Navbar";
 import { UseFetchContext } from "../../hooks/UseFetchContext";
 import { ProductHeader } from "../home/Products-header";
 
@@ -64,7 +65,7 @@ export function AddProduct() {
       //  Do popu infomującego żeby uzupełnić dane
       setShow(show);
       setTarget(event.target);
-      console.log("Popraw formularz lol");
+      console.log("Popraw formularz");
     } else {
       //  Do popu infomującego żeby uzupełnić dane
       setShow(!show);
@@ -117,9 +118,9 @@ export function AddProduct() {
         title: title,
         description: description,
         type: typeData,
-        productCount: productCount,
+        productCount: Number(productCount),
         model: model,
-        price: price,
+        price: Number(price),
         size: sizeData,
         color: color,
         image: image,
@@ -203,6 +204,7 @@ export function AddProduct() {
 
   return (
     <>
+      <Navbar></Navbar>
       <ProductHeader></ProductHeader>
       <Card className="mx-auto max-w-7xl bg-white shadow-sm  mb-4 ">
         <Card.Body className="">
