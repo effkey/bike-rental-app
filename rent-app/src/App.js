@@ -12,7 +12,6 @@ function App() {
     <>
       <FetchProvider>
         <ShoppingCartProvider>
-          <Navbar></Navbar>
           <Routes>
             <Route exact path="/" element={<Navigate to="/home" />} />
             <Route path="/home" element={<Home />} />

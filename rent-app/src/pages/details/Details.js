@@ -4,12 +4,16 @@ import { ProductHeader } from "../home/Products-header";
 
 import { useShoppingCart } from "../../context/ShoppingCartContext";
 import { UseFetchContext } from "../../hooks/UseFetchContext";
+import { Navbar } from "../../components/Navbar";
 
 export function Details() {
   // // Routing z parametrem
   const { useFetchForDetails } = UseFetchContext();
+
+  // use params()
   let { id } = useParams();
   id = Number(id);
+
   let product = useFetchForDetails(id);
   const {
     getItemQuantity,
@@ -21,6 +25,7 @@ export function Details() {
 
   return (
     <>
+      <Navbar></Navbar>
       <ProductHeader></ProductHeader>
       <Card className="mx-auto max-w-7xl bg-white shadow-sm mt-6">
         <Card.Body className="flex items-center">

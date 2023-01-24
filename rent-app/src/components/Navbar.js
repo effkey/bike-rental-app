@@ -1,6 +1,7 @@
 import { Button, Container, Nav, Navbar as Navbarr } from "react-bootstrap";
 import { NavLink } from "react-router-dom";
 import { useShoppingCart } from "../context/ShoppingCartContext";
+import PropTypes from 'prop-types';
 
 export function Navbar() {
   const { openCart, cartQuantity } = useShoppingCart();
@@ -50,3 +51,8 @@ export function Navbar() {
     </Navbarr>
   );
 }
+
+Navbar.propTypes = {
+  openCart: PropTypes.func,
+  cartQuantity: PropTypes.number,
+};

@@ -3,6 +3,7 @@ import { NavLink, useParams } from "react-router-dom";
 import { ProductHeader } from "../home/Products-header";
 import { UseFetchContext } from "../../hooks/UseFetchContext";
 import React from "react";
+import { Navbar } from "../../components/Navbar";
 
 export function Images() {
   // wykorzystanie dwóch zmiennych właściwości routingu
@@ -24,6 +25,7 @@ export function Images() {
 
   return (
     <>
+      <Navbar></Navbar>
       <ProductHeader></ProductHeader>
       <Card className="mx-auto max-w-7xl bg-white shadow-sm mt-6">
         <Card.Body className="flex items-center">

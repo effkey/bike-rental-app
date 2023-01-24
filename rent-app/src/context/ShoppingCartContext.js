@@ -2,6 +2,7 @@ import { createContext, useContext, useState } from "react";
 import PropTypes from "prop-types";
 import { ShoppingCart } from "../components/ShoppingCart";
 
+
 const ShoppingCartContext = createContext({});
 
 export function useShoppingCart() {
@@ -69,21 +70,6 @@ export function ShoppingCartProvider({ children }) {
     });
   }
   console.log(cartItems);
-
-  // Nie jestem tego pewien
-  ShoppingCartContext.propTypes = {
-    children: PropTypes.ReactNode,
-    getItemQuantity: PropTypes.func.isRequired,
-    increaseCartQuantity: PropTypes.func.isRequired,
-    decreaseCartQuantity: PropTypes.func.isRequired,
-    removeFromCart: PropTypes.func.isRequired,
-    openCart: PropTypes.func.isRequired,
-    closeCart: PropTypes.func.isRequired,
-    cartQuantity: PropTypes.number,
-    id: PropTypes.number,
-    quantity: PropTypes.number,
-    cartItems: PropTypes.array,
-  };
   ////
   return (
     <ShoppingCartContext.Provider
@@ -104,3 +90,7 @@ export function ShoppingCartProvider({ children }) {
     </ShoppingCartContext.Provider>
   );
 }
+
+ShoppingCartProvider.propTypes = {
+  children: PropTypes.node.isRequired,
+};

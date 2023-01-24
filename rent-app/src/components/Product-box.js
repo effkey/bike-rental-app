@@ -2,17 +2,10 @@ import { Button, Card, Nav, Table } from "react-bootstrap";
 import { NavLink } from "react-router-dom";
 import { useShoppingCart } from "../context/ShoppingCartContext";
 import { UseFetchContext } from "../hooks/UseFetchContext";
-export function ProductBox({
-  id,
-  title,
-  price,
-  type,
-  description,
-  image,
-  size,
-  color,
-  productCount,
-}) {
+import { PropTypes } from "prop-types";
+
+export function ProductBox(props) {
+  
   const {
     getItemQuantity,
     increaseCartQuantity,
@@ -20,7 +13,7 @@ export function ProductBox({
     removeFromCart,
   } = useShoppingCart();
   const { deleteProduct } = UseFetchContext();
-  const quantity = getItemQuantity(id);
+  const quantity = getItemQuantity(props.id);
 
   function handleClick(id) {
     deleteProduct(id);
@@ -34,25 +27,25 @@ export function ProductBox({
           <tbody>
             <tr className="flex justify-between">
               <th className="flex items-center justify-between">
-                <Card.Img src={image} alt="rower" />
+                <Card.Img src={props.image} alt="rower" />
               </th>
               <th>
                 <div className="ml-20 mb-5 text-base justify-between">
-                  <Card.Title> {title}</Card.Title>
-                  <Card.Text> {description}</Card.Text>
-                  <Card.Text> Typ : {type} </Card.Text>
-                  <Card.Text> Ilość: {productCount}</Card.Text>
+                  <Card.Title> {props.title}</Card.Title>
+                  <Card.Text> {props.description}</Card.Text>
+                  <Card.Text> Typ : {props.type} </Card.Text>
+                  <Card.Text> Ilość: {props.productCount}</Card.Text>
                 </div>
               </th>
               <th>
                 <div className="ml-20 justify-between">
                   <span className="flex justify-end text-red-400 mb-5 mr-5 text-3xl">
-                    {price + " zł/dzień"}
+                    {props.price + " zł/dzień"}
                   </span>
                   <div className="mb-5">
                     {/* todo routing do szczegółów */}
                     <Button variant="danger">
-                      <Nav.Link to={`/details/${id}`} as={NavLink}>
+                      <Nav.Link to={`/details/${props.id}`} as={NavLink}>
                         Szczegóły
                       </Nav.Link>
                     </Button>
@@ -60,7 +53,7 @@ export function ProductBox({
                   {quantity === 0 ? (
                     <Button
                       variant="danger"
-                      onClick={() => increaseCartQuantity(id)}
+                      onClick={() => increaseCartQuantity(props.id)}
                     >
                       Dodaj do koszyka
                     </Button>
@@ -69,7 +62,7 @@ export function ProductBox({
                       className="d-flex align-items-center flex-column"
                       style={{ gap: ".5rem" }}
                     >
-                      <Button onClick={() => increaseCartQuantity(id)}>
+                      <Button onClick={() => increaseCartQuantity(props.id)}>
                         +
                       </Button>
 
@@ -80,13 +73,13 @@ export function ProductBox({
                         className="d-flex align-items-center justify-content-center"
                         style={{ gap: ".5rem" }}
                       >
-                        <Button onClick={() => decreaseCartQuantity(id)}>
+                        <Button onClick={() => decreaseCartQuantity(props.id)}>
                           -
                         </Button>
                       </div>
                       <div>
                         <Button
-                          onClick={() => removeFromCart(id)}
+                          onClick={() => removeFromCart(props.id)}
                           variant="danger"
                           size="sm"
                         >
@@ -101,7 +94,7 @@ export function ProductBox({
                 <Button
                   className=" ml-20 h-100"
                   variant="danger"
-                  onClick={() => handleClick(id)}
+                  onClick={() => handleClick(props.id)}
                 >
                   Usuń przedmiot
                 </Button>
@@ -113,3 +106,15 @@ export function ProductBox({
     </Card>
   );
 }
+
+ProductBox.propTypes = {
+  id: PropTypes.number.isRequired,
+  title: PropTypes.string.isRequired,
+  price: PropTypes.number.isRequired,
+  type: PropTypes.string.isRequired,
+  description: PropTypes.string.isRequired,
+  image: PropTypes.string.isRequired,
+  size: PropTypes.string,
+  color: PropTypes.string,
+  productCount: PropTypes.number.isRequired,
+};

@@ -3,6 +3,7 @@ import { Button, Stack } from "react-bootstrap";
 import { useShoppingCart } from "../context/ShoppingCartContext";
 
 import { UseFetchContext } from "../hooks/UseFetchContext";
+import PropTypes from 'prop-types';
 
 // CartItem.propTypes = { id: PropTypes.number, quantity: PropTypes.number };
 
@@ -50,3 +51,8 @@ export function CartItem({ id, quantity }) {
     </Stack>
   );
 }
+
+CartItem.propTypes = {
+  id: PropTypes.number.isRequired,
+  quantity: PropTypes.number.isRequired,
+};

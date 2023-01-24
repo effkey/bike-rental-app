@@ -1,4 +1,5 @@
 import { useState } from "react";
+import PropTypes from 'prop-types';
 
 export function DatePicker(props) {
   const today = new Date().toISOString().substring(0, 10);
@@ -23,3 +24,6 @@ export function DatePicker(props) {
     </>
   );
 }
+DatePicker.propTypes = {
+  onChange: PropTypes.func.isRequired,
+};

@@ -2,6 +2,7 @@ import { ProductBox } from "../../components/Product-box";
 import { ProductHeader } from "./Products-header";
 import React from "react";
 import { UseFetchContext } from "../../hooks/UseFetchContext";
+import { Navbar } from "../../components/Navbar";
 
 export function Home() {
   // let { items } = useFetch();
@@ -10,6 +11,7 @@ export function Home() {
   console.log(items);
   return (
     <>
+      <Navbar></Navbar>
       <ProductHeader></ProductHeader>
       {items.map((item) => (
         <React.Fragment key={item.id}>
