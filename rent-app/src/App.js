@@ -4,7 +4,6 @@ import { Navbar } from "./components/Navbar";
 import { Details } from "./pages/details/Details";
 import { Images } from "./pages/details/Images.js";
 import { ShoppingCartProvider } from "./context/ShoppingCartContext";
-
 import { FetchProvider } from "./hooks/UseFetchContext";
 import { AddProduct } from "./pages/addProduct/AddProduct";
 

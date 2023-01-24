@@ -2,10 +2,12 @@ import { useState } from "react";
 
 export function DatePicker(props) {
   const today = new Date().toISOString().substring(0, 10);
-  //   const [minDate, setMinDate] = useState(today);
-  const [minDate] = useState(today);
   const [date, setDate] = useState("");
-  props.onChange(date);
+  const [minDate] = useState(today);
+  const handleDateChange = (event) => {
+    setDate(event.target.value);
+    props.onChange(event.target.value);
+  };
   return (
     <>
       <input
@@ -15,7 +17,7 @@ export function DatePicker(props) {
         name="trip-start"
         min={minDate}
         onChange={(event) => {
-          setDate(event.target.value);
+          handleDateChange(event);
         }}
       ></input>
     </>

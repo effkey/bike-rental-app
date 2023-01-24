@@ -7,6 +7,7 @@ import { CartItem } from "./CartItem";
 import "react-datepicker/dist/react-datepicker.css";
 import { UseFetchContext } from "../hooks/UseFetchContext";
 import { useState } from "react";
+import { DatePicker } from "./DatePicker";
 
 export function ShoppingCart({ isOpen }) {
   const { closeCart, cartItems, cartQuantity, removeCart } = useShoppingCart();
@@ -23,12 +24,12 @@ export function ShoppingCart({ isOpen }) {
   // const [selectedStartDate, setSelectedStartDate] = useState("");
   // const [selectedEndDate, setSelectedEndDate] = useState("");
 
-  // const handleDateChangeStart = (date) => {
-  //   setSelectedStartDate(date);
-  // };
-  // const handleDateChangeEnd = (date) => {
-  //   setSelectedEndDate(date);
-  // };
+  const handleDateChangeStart = (date) => {
+    setSelectedStartDate(date);
+  };
+  const handleDateChangeEnd = (date) => {
+    setSelectedEndDate(date);
+  };
 
   // funkcja zmniejsza ilość produktów w sklepie po nacisnieciu przycisku kup
   function updateProductCount() {
@@ -96,8 +97,9 @@ export function ShoppingCart({ isOpen }) {
                 Wybierz date wpożyczenia:
               </label>
               <div className="mt-4">
-                {/* <DatePicker onChange={handleDateChangeStart}></DatePicker> */}
-                <input
+                {/* Komponent reużywalny */}
+                <DatePicker onChange={handleDateChangeStart}></DatePicker>
+                {/* <input
                   className="w-40 bg-white focus:outline-none focus:shadow-outline-blue border border-gray-300 rounded-lg py-2 px-4 block  appearance-none leading-normal float-right"
                   type="date"
                   value={selectedStartDate}
@@ -107,7 +109,7 @@ export function ShoppingCart({ isOpen }) {
                   onChange={(event) => {
                     setSelectedStartDate(event.target.value);
                   }}
-                ></input>
+                ></input> */}
               </div>
             </div>
             <div className="inline-block">
@@ -115,8 +117,9 @@ export function ShoppingCart({ isOpen }) {
                 Wybierz date zakończenia:
               </label>
               <div className="mt-4">
-                {/* <DatePicker onChange={handleDateChangeEnd}></DatePicker> */}
-                <input
+                {/* Komponent reużywalny */}
+                <DatePicker onChange={handleDateChangeEnd}></DatePicker>
+                {/* <input
                   className="w-40 bg-white focus:outline-none focus:shadow-outline-blue border border-gray-300 rounded-lg py-2 px-4 block  appearance-none leading-normal float-right"
                   type="date"
                   id="start"
@@ -126,7 +129,7 @@ export function ShoppingCart({ isOpen }) {
                   onChange={(event) => {
                     setSelectedEndDate(event.target.value);
                   }}
-                />
+                /> */}
               </div>
             </div>
             <div className="inline-block">
