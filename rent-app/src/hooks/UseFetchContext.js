@@ -83,27 +83,6 @@ export function FetchProvider({ children }) {
       .catch((error) => console.log("errrrror", error));
   }, [URL]);
 
-  //   const getItemID = (id) => {
-  //     setPage(`http://localhost:8000/product/${id}`);
-  //     return items;
-  //   };
-
-  //   const [itemsDetails, setItemsDetails] = useState([]);
-  //   const [itemID, setItemID] = useState([]);
-
-  // //   let getItemID = (id) => {
-  // //     return itemsDetails;
-  // //   };
-
-  //   useEffect(() => {
-  //     console.log("page kurwa", page);
-  //     fetch(`http://localhost:8000/product/${itemID}`)
-  //       .then((response) => response.json())
-  //       .then((data) => setItemsDetails(data))
-  //       .catch((error) => console.log("errrrror kuwa", error));
-  //   }, [itemID]);
-  //   const getItemsForDetails = () => {};
-
   async function getProductsToadd(Product) {
     console.log(Product);
     const response = await fetch(`${URL}/product`, {
