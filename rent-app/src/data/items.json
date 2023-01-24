@@ -35,6 +35,7 @@
       "color": "grafitowy",
       "productCount": 4,
       "model": "Escape Disc 2 2023"
+<<<<<<< HEAD
     },
     {
       "title": "Rowerowy rower",
@@ -59,6 +60,8 @@
       "color": "FASFAS",
       "image": "https://t3.ftcdn.net/jpg/04/34/72/82/360_F_434728286_OWQQvAFoXZLdGHlObozsolNeuSxhpr84.jpg",
       "id": 11
+=======
+>>>>>>> 07ed3fced56ae15a415c58b269d83a999b414c56
     }
   ],
   "type": [
