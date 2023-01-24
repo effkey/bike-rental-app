@@ -1,23 +1,6 @@
 {
   "product": [
     {
-      "id": 1,
-      "title": "Rower szosowy Trek Madone SLR 9 Gen 7 2023",
-      "price": 350,
-      "type": "Szosa",
-      "description": "Szukasz tego co najlepsze i najszybsze? Nowy trek Madone SLR9 to prawdziwe dzieło sztuki, które dobrze wie, jak smakuje wygrana!",
-      "image": "https://sprint-rowery.pl/media/catalog/product/cache/384791b6b20959df5b424e91f5ae26e1/r/o/rower-szosowy-trek-madone-slr-9-gen-7-2023-srebrny-01_1.jpg",
-      "size": "M",
-      "color": "srebny",
-      "productCount": 2,
-      "model": "SLR 9 Gen 7 2023",
-      "morephoto": [
-        "https://trek.scene7.com/is/image/TrekBicycleProducts/MadoneSLR9Disc_19_24247_B_Alt6?$responsive-pjpg$&cache=on,on&wid=800&hei=600",
-        "https://trek.scene7.com/is/image/TrekBicycleProducts/MadoneSLR9eTap_22_35745_A_Alt3?$responsive-pjpg$&cache=on,on&wid=800&hei=600",
-        "https://trek.scene7.com/is/image/TrekBicycleProducts/MadoneSLR6eTap_23_37417_A_Alt2?$responsive-pjpg$&cache=on,on&wid=800&hei=600"
-      ]
-    },
-    {
       "id": 5,
       "title": "Rower szosowy Trek Domane AL 2 2023",
       "price": 169,
@@ -26,7 +9,7 @@
       "image": "https://sprint-rowery.pl/media/catalog/product/cache/384791b6b20959df5b424e91f5ae26e1/r/o/rower-szosowy-trek-domane-al-2-2021-niebieski-01_1_1.jpg",
       "size": "M",
       "color": "niebieski",
-      "productCount": 7,
+      "productCount": 6,
       "model": "Trek Domane AL 2 2023"
     },
     {
