@@ -1,7 +1,4 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-
-import { ShoppingCart } from "../components/ShoppingCart";
 
 const FetchContext = createContext({});
 
@@ -15,7 +12,8 @@ export function FetchProvider({ children }) {
   const [items, setItems] = useState([]);
   const [page, setPage] = useState(`${URL}/product`);
   const [type, setType] = useState([]);
-  const [typePage, setTypePage] = useState([]);
+  const [size, setSize] = useState([]);
+
   useEffect(() => {
     if (page === "Sortuj malejąco!" || page === "Sortuj rosnąco!") {
     } else {
@@ -25,6 +23,15 @@ export function FetchProvider({ children }) {
     }
   }, [page]);
 
+  function useFetchForDetails(id) {
+    const [item, setItem] = useState([]);
+    useEffect(() => {
+      fetch(`${URL}/product/${id}`)
+        .then((response) => response.json())
+        .then((data) => setItem(data));
+    }, [id]);
+    return item;
+  }
   // Sortowanie produktów po cenie malejąco
   //   const handleSortAsc = () => {
   //     setPage("http://localhost:8000/product?_sort=price&_order=asc");
@@ -67,9 +74,15 @@ export function FetchProvider({ children }) {
       .then((response) => response.json())
       .then((data) => setType(data))
       .catch((error) => console.log("errrrror", error));
-  }, []);
+  }, [URL]);
 
-  const getAllTypes = () => {};
+  useEffect(() => {
+    fetch(`${URL}/size`)
+      .then((response) => response.json())
+      .then((data) => setSize(data))
+      .catch((error) => console.log("errrrror", error));
+  }, [URL]);
+
   //   const getItemID = (id) => {
   //     setPage(`http://localhost:8000/product/${id}`);
   //     return items;
@@ -90,6 +103,44 @@ export function FetchProvider({ children }) {
   //       .catch((error) => console.log("errrrror kuwa", error));
   //   }, [itemID]);
   //   const getItemsForDetails = () => {};
+
+  async function getProductsToadd(Product) {
+    console.log(Product);
+    const response = await fetch(`${URL}/product`, {
+      method: "POST",
+      body: JSON.stringify(Product),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    const newProduct = await response.json();
+    console.log(newProduct, "prosze dzialaj");
+    setItems((oldItems) => [...oldItems, newProduct]);
+  }
+
+  async function deleteProduct(id) {
+    await fetch(`${URL}/product/${id}`, {
+      method: "DELETE",
+    }).then((response) => {
+      console.log(response);
+    });
+    setItems((oldItems) => oldItems.filter((item) => item.id !== id));
+  }
+
+  async function updateProduct(id, data) {
+    fetch(`${URL}/product/${id}`, {
+      method: "PUT",
+      body: JSON.stringify(data),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => console.log(data))
+      .catch((error) => console.error(error));
+  }
+
   return (
     <FetchContext.Provider
       value={{
@@ -99,6 +150,11 @@ export function FetchProvider({ children }) {
         items,
         type,
         getProductTypes,
+        getProductsToadd,
+        size,
+        deleteProduct,
+        useFetchForDetails,
+        updateProduct,
       }}
     >
       {children}

@@ -1,5 +1,5 @@
-import { Button, Card, Dropdown, DropdownButton } from "react-bootstrap";
-import useFetch from "../../śmieci/useFetch";
+import { Button, Card, Dropdown, DropdownButton, Nav } from "react-bootstrap";
+import { NavLink } from "react-router-dom";
 import { UseFetchContext } from "../../hooks/UseFetchContext";
 
 export function ProductHeader() {
@@ -11,6 +11,7 @@ export function ProductHeader() {
     getProductTypes,
     items,
   } = UseFetchContext();
+
   // let { handleSortAsc } = useFetch();
   return (
     <div className="mx-auto max-w-7xl bg-white shadow-sm mb-4 ">
@@ -51,7 +52,13 @@ export function ProductHeader() {
               variant="outline"
               onClick={() => resetData()}
             >
-              Wyczyść
+              Wyczyść filtry
+            </Button>
+
+            <Button className="pl-2" variant="outline ">
+              <Nav.Link to={`/add`} as={NavLink}>
+                Dodaj produkt
+              </Nav.Link>
             </Button>
           </div>
         </Card.Body>

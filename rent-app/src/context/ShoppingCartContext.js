@@ -62,6 +62,14 @@ export function ShoppingCartProvider({ children }) {
     });
   }
 
+  // Sam robiłem ale działa :D
+  function removeCart() {
+    setCartItems((currItems) => {
+      return currItems.filter((item) => (item.id = 0));
+    });
+  }
+  console.log(cartItems);
+
   // Nie jestem tego pewien
   ShoppingCartContext.propTypes = {
     children: PropTypes.ReactNode,
@@ -88,6 +96,7 @@ export function ShoppingCartProvider({ children }) {
         closeCart,
         cartItems,
         cartQuantity,
+        removeCart,
       }}
     >
       {children}

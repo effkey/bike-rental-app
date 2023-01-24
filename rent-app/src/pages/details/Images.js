@@ -1,10 +1,12 @@
 import { Button, Card, Carousel, Nav, Table } from "react-bootstrap";
 import { NavLink, useParams } from "react-router-dom";
 import { ProductHeader } from "../home/Products-header";
-import { useFetchForDetails } from "../../hooks/useFetchForDetails";
+import { UseFetchContext } from "../../hooks/UseFetchContext";
+import React from "react";
 
 export function Images() {
   // wykorzystanie dwóch zmiennych właściwości routingu
+  const { useFetchForDetails } = UseFetchContext();
   const { id } = useParams();
   let product = useFetchForDetails(id);
 
@@ -26,11 +28,20 @@ export function Images() {
       <Card className="mx-auto max-w-7xl bg-white shadow-sm mt-6">
         <Card.Body className="flex items-center">
           <Table>
-            <th key={listItems}>
-              <Carousel fade className="w-70" variant="dark">
-                {listItems}
-              </Carousel>
-            </th>
+            <tbody>
+              <tr>
+                <th>
+                  <Carousel
+                    fade
+                    className="w-70"
+                    variant="dark"
+                    key={listItems}
+                  >
+                    {listItems}
+                  </Carousel>
+                </th>
+              </tr>
+            </tbody>
           </Table>
           <div className="ml-20 justify-between">
             <Button variant="danger">

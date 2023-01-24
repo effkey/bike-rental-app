@@ -1,18 +1,20 @@
 import { Button, Stack } from "react-bootstrap";
-import { PropTypes } from "react-bootstrap/esm/Image";
+
 import { useShoppingCart } from "../context/ShoppingCartContext";
-import useFetch from "../śmieci/useFetch";
-import storeItems from "../data/items.json";
-import useFetchForDetails from "../hooks/useFetchForDetails";
+
+import { UseFetchContext } from "../hooks/UseFetchContext";
 
 // CartItem.propTypes = { id: PropTypes.number, quantity: PropTypes.number };
 
 export function CartItem({ id, quantity }) {
+  const { useFetchForDetails } = UseFetchContext();
   const { removeFromCart } = useShoppingCart();
   //   const item = storeItems.product.find((i) => i.id === id);
   //   if (item == null) return null;
 
   let item = useFetchForDetails(id);
+  console.log(item, "itemik");
+
   //   let item = items.map((i) => i.id === id);
   //   console.log(item);
   return (
@@ -45,8 +47,6 @@ export function CartItem({ id, quantity }) {
       >
         &times;
       </Button>
-      {/* <h1>{quantity}</h1>
-      <h2>{item.price * quantity}</h2> */}
     </Stack>
   );
 }

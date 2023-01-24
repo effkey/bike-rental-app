@@ -1,19 +1,76 @@
-import { Button, Offcanvas, Stack } from "react-bootstrap";
+import { Button, Offcanvas, Stack, Nav } from "react-bootstrap";
 import { useShoppingCart } from "../context/ShoppingCartContext";
 import PropTypes from "prop-types";
 import { CartItem } from "./CartItem";
-import useFetchForDetails from "../hooks/useFetchForDetails";
-import useFetch from "../śmieci/useFetch";
+
+// import { DatePicker } from "./DatePicker";
+import "react-datepicker/dist/react-datepicker.css";
 import { UseFetchContext } from "../hooks/UseFetchContext";
+import { useState } from "react";
 
 export function ShoppingCart({ isOpen }) {
-  const { closeCart, cartItems, cartQuantity } = useShoppingCart();
+  const { closeCart, cartItems, cartQuantity, removeCart } = useShoppingCart();
 
+  const { updateProduct, deleteProduct } = UseFetchContext();
+  const { items } = UseFetchContext();
+
+  const today = new Date().toISOString().substring(0, 10);
+  const [minDate, setMinDate] = useState(today);
+
+  const [selectedStartDate, setSelectedStartDate] = useState("");
+  const [selectedEndDate, setSelectedEndDate] = useState("");
+
+  // const [selectedStartDate, setSelectedStartDate] = useState("");
+  // const [selectedEndDate, setSelectedEndDate] = useState("");
+
+  // const handleDateChangeStart = (date) => {
+  //   setSelectedStartDate(date);
+  // };
+  // const handleDateChangeEnd = (date) => {
+  //   setSelectedEndDate(date);
+  // };
+
+  // funkcja zmniejsza ilość produktów w sklepie po nacisnieciu przycisku kup
+  function updateProductCount() {
+    let cartItemsIds = cartItems.map((item) => item.id);
+    // let cartItemsCount = cartItems.find((item) => item.id === cartItemsIds[0]);
+    let updatedData;
+    let it;
+    for (let i = 0; i < Object.keys(cartItemsIds).length; i++) {
+      it = items.find((items) => items.id === cartItemsIds[i]);
+      updatedData = {
+        ...it,
+        productCount: it.productCount - cartItems[i].quantity,
+      };
+
+      if (
+        updatedData.productCount - cartItems[i].quantity === 0 ||
+        updatedData.productCount - cartItems[i].quantity < 0
+      ) {
+        deleteProduct(it.id);
+      } else {
+        updateProduct(it.id, updatedData);
+      }
+    }
+    console.log(updatedData);
+
+    removeCart();
+    closeCart();
+  }
+
+  // Do obliczania ile dni bedzie trwało wypożyczenie
+  const startDate = new Date(selectedStartDate);
+  const endDate = new Date(selectedEndDate);
+  const diffTime = Math.abs(endDate - startDate);
+  let diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+  console.log(diffDays);
+  if (isNaN(diffDays)) {
+    diffDays = 0;
+  }
   // nie wiem czy to dobrze
   ShoppingCart.propTypes = { isOpen: PropTypes.bool };
   ////
 
-  const { items } = UseFetchContext();
   return (
     <Offcanvas
       style={{ width: "760px" }}
@@ -32,15 +89,80 @@ export function ShoppingCart({ isOpen }) {
           {cartItems.map((item) => (
             <CartItem key={item.id} {...item} />
           ))}
+
+          <div className="flex mt-4">
+            <div className="inline-block mr-4">
+              <label className="block font-medium text-gray-700 mb-2">
+                Wybierz date wpożyczenia:
+              </label>
+              <div className="mt-4">
+                {/* <DatePicker onChange={handleDateChangeStart}></DatePicker> */}
+                <input
+                  className="w-40 bg-white focus:outline-none focus:shadow-outline-blue border border-gray-300 rounded-lg py-2 px-4 block  appearance-none leading-normal float-right"
+                  type="date"
+                  value={selectedStartDate}
+                  id="start"
+                  name="trip-start"
+                  min={minDate}
+                  onChange={(event) => {
+                    setSelectedStartDate(event.target.value);
+                  }}
+                ></input>
+              </div>
+            </div>
+            <div className="inline-block">
+              <label className="block font-medium text-gray-700 mb-2">
+                Wybierz date zakończenia:
+              </label>
+              <div className="mt-4">
+                {/* <DatePicker onChange={handleDateChangeEnd}></DatePicker> */}
+                <input
+                  className="w-40 bg-white focus:outline-none focus:shadow-outline-blue border border-gray-300 rounded-lg py-2 px-4 block  appearance-none leading-normal float-right"
+                  type="date"
+                  id="start"
+                  value={selectedEndDate}
+                  name="trip-start"
+                  min={minDate}
+                  onChange={(event) => {
+                    setSelectedEndDate(event.target.value);
+                  }}
+                />
+              </div>
+            </div>
+            <div className="inline-block">
+              <label className="block font-medium text-gray-700  ml-10">
+                Ile wybranych dni:
+              </label>
+
+              <div className=" mt-4 ml-5">
+                <div className=" fw-bold fs-5 ml-10">{diffDays} dni</div>
+              </div>
+            </div>
+          </div>
+
           <div className="ms-auto fw-bold fs-5">
             Suma:{" "}
             {cartItems.reduce((total, cartItem) => {
               const item = items.find((i) => i.id === cartItem.id);
-              return total + (item?.price || 0) * cartItem.quantity;
+              if (diffDays === 0) {
+                diffDays = 1;
+              }
+              return total + (item?.price || 0) * cartItem.quantity * diffDays;
             }, 0)}{" "}
             {" zł"}
           </div>
-          <Button className="w-40 h-30 float-right">Kup</Button>
+          <div>
+            <Button className="w-40 ml-5 h-30 float-right">
+              <Nav.Link onClick={updateProductCount}>Kup</Nav.Link>
+            </Button>
+            <Button
+              variant="danger"
+              className="w-40 h-30 float-right"
+              onClick={removeCart}
+            >
+              Wyczyść koszyk
+            </Button>
+          </div>
         </Stack>
       </Offcanvas.Body>
     </Offcanvas>

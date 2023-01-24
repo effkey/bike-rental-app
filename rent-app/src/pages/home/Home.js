@@ -7,7 +7,7 @@ export function Home() {
   // let { items } = useFetch();
   const { items } = UseFetchContext();
 
-  // console.log(items);
+  console.log(items);
   return (
     <>
       <ProductHeader></ProductHeader>
