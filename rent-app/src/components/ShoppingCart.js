@@ -171,3 +171,7 @@ export function ShoppingCart({ isOpen }) {
     </Offcanvas>
   );
 }
+
+ShoppingCart.propTypes = {
+  isOpen: PropTypes.bool
+};

@@ -35,30 +35,6 @@
       "color": "grafitowy",
       "productCount": 4,
       "model": "Escape Disc 2 2023"
-    },
-    {
-      "title": "Rowerowy rower",
-      "description": "Kuba bua",
-      "type": "Szosa",
-      "productCount": "12345",
-      "model": "xD",
-      "price": "123",
-      "size": "M",
-      "color": "Czarny",
-      "image": "https://t3.ftcdn.net/jpg/04/34/72/82/360_F_434728286_OWQQvAFoXZLdGHlObozsolNeuSxhpr84.jpg",
-      "id": 10
-    },
-    {
-      "title": "Jakub",
-      "description": "FAFA",
-      "type": "Góral",
-      "productCount": "123",
-      "model": "FAFAF",
-      "price": "123",
-      "size": "M",
-      "color": "Bilay",
-      "image": "https://t3.ftcdn.net/jpg/04/34/72/82/360_F_434728286_OWQQvAFoXZLdGHlObozsolNeuSxhpr84.jpg",
-      "id": 11
     }
   ],
   "type": [
