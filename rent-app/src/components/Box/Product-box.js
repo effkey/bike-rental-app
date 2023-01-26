@@ -1,11 +1,11 @@
 import { Button, Card, Nav, Table } from "react-bootstrap";
 import { NavLink } from "react-router-dom";
-import { useShoppingCart } from "../context/ShoppingCartContext";
-import { UseFetchContext } from "../hooks/UseFetchContext";
+import { useShoppingCart } from "../../context/ShoppingCartContext";
+import { UseFetchContext } from "../../hooks/UseFetchContext";
 import { PropTypes } from "prop-types";
+import React from "react";
 
 export function ProductBox(props) {
-  
   const {
     getItemQuantity,
     increaseCartQuantity,
@@ -109,12 +109,10 @@ export function ProductBox(props) {
 
 ProductBox.propTypes = {
   id: PropTypes.number.isRequired,
-  title: PropTypes.string.isRequired,
-  price: PropTypes.number.isRequired,
-  type: PropTypes.string.isRequired,
-  description: PropTypes.string.isRequired,
   image: PropTypes.string.isRequired,
-  size: PropTypes.string,
-  color: PropTypes.string,
+  title: PropTypes.string.isRequired,
+  description: PropTypes.string.isRequired,
+  type: PropTypes.string.isRequired,
   productCount: PropTypes.number.isRequired,
+  price: PropTypes.number.isRequired,
 };

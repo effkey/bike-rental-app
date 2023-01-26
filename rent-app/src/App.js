@@ -1,6 +1,5 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import { Home } from "./pages/home/Home";
-import { Navbar } from "./components/Navbar";
 import { Details } from "./pages/details/Details";
 import { Images } from "./pages/details/Images.js";
 import { ShoppingCartProvider } from "./context/ShoppingCartContext";

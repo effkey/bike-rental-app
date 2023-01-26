@@ -1,7 +1,6 @@
 import { createContext, useContext, useState } from "react";
 import PropTypes from "prop-types";
-import { ShoppingCart } from "../components/ShoppingCart";
-
+import { ShoppingCart } from "../components/Cart/ShoppingCart";
 
 const ShoppingCartContext = createContext({});
 
@@ -26,7 +25,6 @@ export function ShoppingCartProvider({ children }) {
     return cartItems.find((item) => item.id === id)?.quantity || 0;
   }
 
-  // console.log(cartItems, "xd");
   function increaseCartQuantity(id) {
     setCartItems((currItems) => {
       if (currItems.find((item) => item.id === id) == null) {
@@ -57,20 +55,20 @@ export function ShoppingCartProvider({ children }) {
       }
     });
   }
+
   function removeFromCart(id) {
     setCartItems((currItems) => {
       return currItems.filter((item) => item.id !== id);
     });
   }
 
-  // Sam robiłem ale działa :D
   function removeCart() {
     setCartItems((currItems) => {
       return currItems.filter((item) => (item.id = 0));
     });
   }
   console.log(cartItems);
-  ////
+
   return (
     <ShoppingCartContext.Provider
       value={{
@@ -93,4 +91,16 @@ export function ShoppingCartProvider({ children }) {
 
 ShoppingCartProvider.propTypes = {
   children: PropTypes.node.isRequired,
+};
+
+useShoppingCart.propTypes = {
+  getItemQuantity: PropTypes.func.isRequired,
+  increaseCartQuantity: PropTypes.func.isRequired,
+  decreaseCartQuantity: PropTypes.func.isRequired,
+  removeFromCart: PropTypes.func.isRequired,
+  openCart: PropTypes.func.isRequired,
+  closeCart: PropTypes.func.isRequired,
+  cartItems: PropTypes.array.isRequired,
+  cartQuantity: PropTypes.number.isRequired,
+  removeCart: PropTypes.func.isRequired,
 };

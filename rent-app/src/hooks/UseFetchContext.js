@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react";
-
+import PropTypes from "prop-types";
 const FetchContext = createContext({});
 
 export function UseFetchContext() {
@@ -32,10 +32,7 @@ export function FetchProvider({ children }) {
     }, [id]);
     return item;
   }
-  // Sortowanie produktów po cenie malejąco
-  //   const handleSortAsc = () => {
-  //     setPage("http://localhost:8000/product?_sort=price&_order=asc");
-  //     };
+
   const handleSortAsc = (items) => {
     setPage("Sortuj malejąco!");
     setItems(
@@ -46,10 +43,6 @@ export function FetchProvider({ children }) {
     console.log(items);
   };
 
-  // Sortowanie produktów po cenie rosnąco
-  //   const handleSortDesc = () => {
-  //     setPage("http://localhost:8000/product?_sort=price&_order=desc");
-  //     };
   const handleSortDesc = (items) => {
     setPage("Sortuj rosnąco!");
     setItems(
@@ -140,3 +133,7 @@ export function FetchProvider({ children }) {
     </FetchContext.Provider>
   );
 }
+
+FetchProvider.propTypes = {
+  children: PropTypes.node.isRequired,
+};

@@ -1,22 +1,17 @@
 import { Button, Stack } from "react-bootstrap";
 
-import { useShoppingCart } from "../context/ShoppingCartContext";
+import { useShoppingCart } from "../../context/ShoppingCartContext";
 
-import { UseFetchContext } from "../hooks/UseFetchContext";
-import PropTypes from 'prop-types';
-
-// CartItem.propTypes = { id: PropTypes.number, quantity: PropTypes.number };
+import { UseFetchContext } from "../../hooks/UseFetchContext";
+import PropTypes from "prop-types";
 
 export function CartItem({ id, quantity }) {
   const { useFetchForDetails } = UseFetchContext();
   const { removeFromCart } = useShoppingCart();
-  //   const item = storeItems.product.find((i) => i.id === id);
-  //   if (item == null) return null;
 
   let item = useFetchForDetails(id);
   console.log(item, "itemik");
 
-  //   let item = items.map((i) => i.id === id);
   //   console.log(item);
   return (
     <Stack direction="horizontal" gap={2} className="d-flex align-items-center">

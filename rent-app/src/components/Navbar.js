@@ -1,9 +1,9 @@
 import { Button, Container, Nav, Navbar as Navbarr } from "react-bootstrap";
 import { NavLink } from "react-router-dom";
 import { useShoppingCart } from "../context/ShoppingCartContext";
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 
-export function Navbar() {
+export function Navbar(props) {
   const { openCart, cartQuantity } = useShoppingCart();
 
   function openOrNot() {
@@ -19,8 +19,8 @@ export function Navbar() {
     >
       <Container>
         <Nav className="text-2xl">
-          <Nav.Link to={"/home"} as={NavLink}>
-            Wypożyczalnia rowerowa
+          <Nav.Link to={props.goToPage} as={NavLink}>
+            {props.pageTitle}
           </Nav.Link>
         </Nav>
         {/* ikonka koszyka  */}
@@ -55,4 +55,6 @@ export function Navbar() {
 Navbar.propTypes = {
   openCart: PropTypes.func,
   cartQuantity: PropTypes.number,
+  pageTitle: PropTypes.string,
+  goToPage: PropTypes.string,
 };

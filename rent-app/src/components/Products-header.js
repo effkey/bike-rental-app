@@ -1,7 +1,7 @@
 import { Button, Card, Dropdown, DropdownButton, Nav } from "react-bootstrap";
 import { NavLink } from "react-router-dom";
-import { UseFetchContext } from "../../hooks/UseFetchContext";
-
+import { UseFetchContext } from "../hooks/UseFetchContext";
+import PropTypes from "prop-types";
 export function ProductHeader() {
   const {
     handleSortAsc,
@@ -12,7 +12,6 @@ export function ProductHeader() {
     items,
   } = UseFetchContext();
 
-  // let { handleSortAsc } = useFetch();
   return (
     <div className="mx-auto max-w-7xl bg-white shadow-sm mb-4 ">
       <Card style={{ background: "#c7d2fe" }}>
@@ -35,7 +34,6 @@ export function ProductHeader() {
               variant="outline"
               title="Filtruj po typie"
             >
-              {/* todo zrobić filtorwanie po typie */}
               {type.map((typee) => (
                 <Dropdown.ItemText key={typee}>
                   <button onClick={() => getProductTypes(typee)}>
@@ -43,10 +41,8 @@ export function ProductHeader() {
                   </button>
                 </Dropdown.ItemText>
               ))}
-
-              <Dropdown.ItemText>dsad</Dropdown.ItemText>
             </DropdownButton>
-            {/* Resetowanie sortowania */}
+            {/* Resetowanie sortowania/filtrowania po typie */}
             <Button
               className="pl-2"
               variant="outline"
@@ -54,7 +50,6 @@ export function ProductHeader() {
             >
               Wyczyść filtry
             </Button>
-
             <Button className="pl-2" variant="outline ">
               <Nav.Link to={`/add`} as={NavLink}>
                 Dodaj produkt
@@ -66,3 +61,11 @@ export function ProductHeader() {
     </div>
   );
 }
+ProductHeader.propTypes = {
+  handleSortAsc: PropTypes.func,
+  handleSortDesc: PropTypes.func,
+  resetData: PropTypes.func,
+  type: PropTypes.array,
+  getProductTypes: PropTypes.func,
+  items: PropTypes.array,
+};

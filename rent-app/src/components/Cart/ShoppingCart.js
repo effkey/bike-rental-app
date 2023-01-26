@@ -1,28 +1,22 @@
-import { Button, Offcanvas, Stack, Nav } from "react-bootstrap";
-import { useShoppingCart } from "../context/ShoppingCartContext";
+import { Button, Offcanvas, Stack, Overlay, Popover } from "react-bootstrap";
+import { useShoppingCart } from "../../context/ShoppingCartContext";
 import PropTypes from "prop-types";
 import { CartItem } from "./CartItem";
-
-// import { DatePicker } from "./DatePicker";
-import "react-datepicker/dist/react-datepicker.css";
-import { UseFetchContext } from "../hooks/UseFetchContext";
-import { useState } from "react";
-import { DatePicker } from "./DatePicker";
+import { UseFetchContext } from "../../hooks/UseFetchContext";
+import { useRef, useState } from "react";
+import { DatePicker } from "../DatePicker";
 
 export function ShoppingCart({ isOpen }) {
   const { closeCart, cartItems, cartQuantity, removeCart } = useShoppingCart();
-
   const { updateProduct, deleteProduct } = UseFetchContext();
   const { items } = UseFetchContext();
-
-  const today = new Date().toISOString().substring(0, 10);
-  const [minDate, setMinDate] = useState(today);
-
   const [selectedStartDate, setSelectedStartDate] = useState("");
   const [selectedEndDate, setSelectedEndDate] = useState("");
 
-  // const [selectedStartDate, setSelectedStartDate] = useState("");
-  // const [selectedEndDate, setSelectedEndDate] = useState("");
+  // Do popupu
+  const [show, setShow] = useState(false);
+  const [target, setTarget] = useState(null);
+  const ref = useRef(null);
 
   const handleDateChangeStart = (date) => {
     setSelectedStartDate(date);
@@ -32,31 +26,38 @@ export function ShoppingCart({ isOpen }) {
   };
 
   // funkcja zmniejsza ilość produktów w sklepie po nacisnieciu przycisku kup
-  function updateProductCount() {
-    let cartItemsIds = cartItems.map((item) => item.id);
-    // let cartItemsCount = cartItems.find((item) => item.id === cartItemsIds[0]);
-    let updatedData;
-    let it;
-    for (let i = 0; i < Object.keys(cartItemsIds).length; i++) {
-      it = items.find((items) => items.id === cartItemsIds[i]);
-      updatedData = {
-        ...it,
-        productCount: it.productCount - cartItems[i].quantity,
-      };
+  function updateProductCount(event) {
+    console.log("diff" + diffDays);
+    if (diffDays === 0) {
+      console.log("Wybierz date");
+      setShow(show);
+      setTarget(event.target);
+    } else {
+      let cartItemsIds = cartItems.map((item) => item.id);
+      // let cartItemsCount = cartItems.find((item) => item.id === cartItemsIds[0]);
+      let updatedData;
+      let it;
+      for (let i = 0; i < Object.keys(cartItemsIds).length; i++) {
+        it = items.find((items) => items.id === cartItemsIds[i]);
+        updatedData = {
+          ...it,
+          productCount: it.productCount - cartItems[i].quantity,
+        };
 
-      if (
-        updatedData.productCount - cartItems[i].quantity === 0 ||
-        updatedData.productCount - cartItems[i].quantity < 0
-      ) {
-        deleteProduct(it.id);
-      } else {
-        updateProduct(it.id, updatedData);
+        if (
+          updatedData.productCount - cartItems[i].quantity === 0 ||
+          updatedData.productCount - cartItems[i].quantity < 0
+        ) {
+          deleteProduct(it.id);
+        } else {
+          updateProduct(it.id, updatedData);
+        }
       }
+      console.log(updatedData);
+      setShow(!show);
+      removeCart();
+      closeCart();
     }
-    console.log(updatedData);
-
-    removeCart();
-    closeCart();
   }
 
   // Do obliczania ile dni bedzie trwało wypożyczenie
@@ -68,9 +69,6 @@ export function ShoppingCart({ isOpen }) {
   if (isNaN(diffDays)) {
     diffDays = 0;
   }
-  // nie wiem czy to dobrze
-  ShoppingCart.propTypes = { isOpen: PropTypes.bool };
-  ////
 
   return (
     <Offcanvas
@@ -99,17 +97,6 @@ export function ShoppingCart({ isOpen }) {
               <div className="mt-4">
                 {/* Komponent reużywalny */}
                 <DatePicker onChange={handleDateChangeStart}></DatePicker>
-                {/* <input
-                  className="w-40 bg-white focus:outline-none focus:shadow-outline-blue border border-gray-300 rounded-lg py-2 px-4 block  appearance-none leading-normal float-right"
-                  type="date"
-                  value={selectedStartDate}
-                  id="start"
-                  name="trip-start"
-                  min={minDate}
-                  onChange={(event) => {
-                    setSelectedStartDate(event.target.value);
-                  }}
-                ></input> */}
               </div>
             </div>
             <div className="inline-block">
@@ -119,17 +106,6 @@ export function ShoppingCart({ isOpen }) {
               <div className="mt-4">
                 {/* Komponent reużywalny */}
                 <DatePicker onChange={handleDateChangeEnd}></DatePicker>
-                {/* <input
-                  className="w-40 bg-white focus:outline-none focus:shadow-outline-blue border border-gray-300 rounded-lg py-2 px-4 block  appearance-none leading-normal float-right"
-                  type="date"
-                  id="start"
-                  value={selectedEndDate}
-                  name="trip-start"
-                  min={minDate}
-                  onChange={(event) => {
-                    setSelectedEndDate(event.target.value);
-                  }}
-                /> */}
               </div>
             </div>
             <div className="inline-block">
@@ -148,16 +124,39 @@ export function ShoppingCart({ isOpen }) {
             {cartItems.reduce((total, cartItem) => {
               const item = items.find((i) => i.id === cartItem.id);
               if (diffDays === 0) {
-                diffDays = 1;
+                return total + (item?.price || 0) * cartItem.quantity * 1;
               }
               return total + (item?.price || 0) * cartItem.quantity * diffDays;
             }, 0)}{" "}
             {" zł"}
           </div>
           <div>
-            <Button className="w-40 ml-5 h-30 float-right">
-              <Nav.Link onClick={updateProductCount}>Kup</Nav.Link>
+            <Button
+              className="w-40 ml-5 h-30 float-right"
+              onClick={updateProductCount}
+              ref={ref}
+            >
+              Kup
             </Button>
+            <Overlay
+              show={!show}
+              target={target}
+              placement="bottom"
+              container={ref}
+              containerPadding={20}
+            >
+              <Popover id="popover-contained">
+                <Popover.Header as="h3" className="text-black">
+                  Błąd!
+                </Popover.Header>
+                <Popover.Body>
+                  <strong>
+                    Brak czasu trwania wypożyczenia, ustaw datę początkową i
+                    końcową aby wyliczyć długość trwania wypożyczenia.
+                  </strong>
+                </Popover.Body>
+              </Popover>
+            </Overlay>
             <Button
               variant="danger"
               className="w-40 h-30 float-right"
@@ -173,5 +172,5 @@ export function ShoppingCart({ isOpen }) {
 }
 
 ShoppingCart.propTypes = {
-  isOpen: PropTypes.bool
+  isOpen: PropTypes.bool,
 };
