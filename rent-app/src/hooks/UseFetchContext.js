@@ -7,7 +7,7 @@ export function UseFetchContext() {
 }
 
 export function FetchProvider({ children }) {
-  const URL = `http://localhost:8000`;
+  const URL = `https://expensive-loafers-pike.cyclic.app/`;
 
   const [items, setItems] = useState([]);
   const [page, setPage] = useState(`${URL}/product`);
